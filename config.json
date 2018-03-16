@@ -20,7 +20,9 @@
                 "type": "place_holder",
                 "before": "call_before"
             }
-        ]
+        ],
+        "after": "print"
+        
     }, {
         "name": "test",
         "join": ",",

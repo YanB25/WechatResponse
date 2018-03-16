@@ -75,7 +75,13 @@ def printMsg(msg):
 
 
 
-if __name__ == '__main__':
-    config = readJson()
-    initConfig(config)
-    bot.start()
+class WeChatResponse():
+    def __init__(self, obj = {}):
+        
+    def start(self):
+        bot.start()
+
+
+
+config = readJson()
+initConfig(config)
