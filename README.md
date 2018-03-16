@@ -1,6 +1,6 @@
 # WechatResponse
 ## TL;DR
-An incredibly user-friendly framework for autoreply in WeChat. The framework is based on `wxpy`.
+An incredibly user-friendly framework for autoreply in WeChat. The framework is based on `wxpy`.  
 一个极其容易配置，可拓展的微信自动回复框架。基于`wxpy`开发。
 ## Getting Start
 ### 配置方法
