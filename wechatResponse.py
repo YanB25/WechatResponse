@@ -1,7 +1,11 @@
+import copy
 from wxpy import *
 import json
-
+toolkit = {}
 class CommandNotMatch(Exception):
+    pass
+
+class CustomException(Exception):
     pass
 
 global config
@@ -39,6 +43,19 @@ def checkValid(obj, text):
         if pattern['type'] == 'constant' and text != pattern['value']:
             raise CommandNotMatch('constant not match, expexted {}, get {}'
                 .format(pattern['value'], text))
+
+        if pattern.get('before') and not toolkit.get(pattern['before']):
+            raise CommandNotMatch('expected before {} in option'
+                .format(pattern['before']))
+        if pattern.get('after') and not toolkit.get(pattern['after']):
+            raise CommandNotMatch('expected after {} in option'
+                .format(pattern['after']))
+
+    if obj.get('before') and not toolkit.get(obj['before']):
+        raise CommandNotMatch('expected before in toolkit')
+    if obj.get('after') and not toolkit.get(obj['after']):
+        raise CommandNotMatch('expected after in toolkit')
+
         
         
     
@@ -55,8 +72,16 @@ def printMsg(msg):
         try:
             checkValid(obj, msg.text)
             for command, text in zip(commands, msg.text.split(obj['join'])):
+                if command.get('before'):
+                    func = toolkit[command['before']]
+                    func(msg, text)
+
                 if command['type'] == 'place_holder':
                     record[command['value']] = text
+                
+                if command.get('after'):
+                    func = toolkit[command['after']]
+                    func(msg, text)
 
             record['user'] = msg.sender.name
             if obj.get('timestamp') and obj['timestamp'] == True:
@@ -65,6 +90,10 @@ def printMsg(msg):
             break
         except CommandNotMatch as e:
             # print(e)
+            record = {}
+            continue
+        except CustomException as e:
+            print(e)
             record = {}
             continue
 
@@ -77,7 +106,10 @@ def printMsg(msg):
 
 class WeChatResponse():
     def __init__(self, obj = {}):
-        
+        global toolkit
+        for key in obj:
+            toolkit[key] = obj[key]
+
     def start(self):
         bot.start()
 
