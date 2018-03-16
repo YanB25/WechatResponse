@@ -1,0 +1,39 @@
+[
+    {
+        "name": "order",
+        "join": " " ,
+        "commands": [
+            {
+                "value": "下单",
+                "type": "constant"
+            },
+            {
+                "value": "time",
+                "type": "place_holder"
+            },
+            {
+                "value": "address",
+                "type": "place_holder"
+            },
+            {
+                "value": "num",
+                "type": "place_holder",
+                "before": "call_before"
+            }
+        ]
+    }, {
+        "name": "test",
+        "join": ",",
+        "commands": [
+            {
+                "value": "你好",
+                "type": "constant"
+            },
+            {
+                "value": "words",
+                "type": "place_holder"
+            }
+
+        ]
+    }
+]
